@@ -7,6 +7,16 @@ const RecipeDetails = () => {
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
   const [ingredients, setIngredients] = useState([]);
+  const [removedIngredients, setRemovedIngredients] = useState([]);
+  const [showRemoved, setShowRemoved] = useState(false);
+
+  // Cargar ingredientes removidos del localStorage al montar
+  useEffect(() => {
+    const savedRemoved = localStorage.getItem(`removedIngredients_${id}`);
+    if (savedRemoved) {
+      setRemovedIngredients(JSON.parse(savedRemoved));
+    }
+  }, [id]);
 
   useEffect(() => {
     const fetchMeal = async () => {
@@ -16,6 +26,7 @@ const RecipeDetails = () => {
         const data = await response.json();
         if (data.meals && data.meals.length > 0) {
           setMeal(data.meals[0]);
+          
           // Extraer ingredientes y medidas
           const ingr = [];
           for (let i = 1; i <= 20; i++) {
@@ -25,7 +36,18 @@ const RecipeDetails = () => {
               ingr.push({ name: ingredient, measure: measure || '' });
             }
           }
-          setIngredients(ingr);
+
+          // Filtrar los ingredientes que ya están en removedIngredients
+          const savedRemoved = localStorage.getItem(`removedIngredients_${id}`);
+          if (savedRemoved) {
+            const removed = JSON.parse(savedRemoved);
+            const filteredIngredients = ingr.filter(ing => 
+              !removed.some(removedIng => removedIng.name === ing.name)
+            );
+            setIngredients(filteredIngredients);
+          } else {
+            setIngredients(ingr);
+          }
         }
       } catch (error) {
         setMeal(null);
@@ -36,7 +58,23 @@ const RecipeDetails = () => {
   }, [id]);
 
   const handleRemoveIngredient = (index) => {
+    const removedIngredient = ingredients[index];
     setIngredients(prev => prev.filter((_, i) => i !== index));
+    setRemovedIngredients(prev => {
+      const newRemoved = [...prev, removedIngredient];
+      localStorage.setItem(`removedIngredients_${id}`, JSON.stringify(newRemoved));
+      return newRemoved;
+    });
+  };
+
+  const handleRestoreIngredient = (index) => {
+    const restoredIngredient = removedIngredients[index];
+    setRemovedIngredients(prev => {
+      const newRemoved = prev.filter((_, i) => i !== index);
+      localStorage.setItem(`removedIngredients_${id}`, JSON.stringify(newRemoved));
+      return newRemoved;
+    });
+    setIngredients(prev => [...prev, restoredIngredient]);
   };
 
   if (loading) {
@@ -78,6 +116,34 @@ const RecipeDetails = () => {
             </li>
           ))}
         </ul>
+        
+        {removedIngredients.length > 0 && (
+          <div className="removed-ingredients-section">
+            <button 
+              className="show-removed-btn"
+              onClick={() => setShowRemoved(!showRemoved)}
+            >
+              {showRemoved ? 'Ocultar ingredientes removidos' : 'Mostrar ingredientes removidos'}
+            </button>
+            
+            {showRemoved && (
+              <ul className="recipe-details-ingredients removed">
+                {removedIngredients.map((ing, idx) => (
+                  <li key={idx} className="recipe-details-ingredient">
+                    <span>{ing.name}{ing.measure ? ` (${ing.measure})` : ''}</span>
+                    <button 
+                      className="restore-ingredient-btn" 
+                      onClick={() => handleRestoreIngredient(idx)} 
+                      title="Restaurar ingrediente"
+                    >
+                      +
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

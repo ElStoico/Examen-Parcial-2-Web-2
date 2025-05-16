@@ -138,6 +138,56 @@
   margin-top: 3rem;
 }
 
+.removed-ingredients-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.show-removed-btn {
+  background: #ffd600;
+  color: #000018;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+.show-removed-btn:hover {
+  background: #fffbe6;
+}
+
+.recipe-details-ingredients.removed {
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+.restore-ingredient-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.restore-ingredient-btn:hover {
+  background: #45a049;
+}
+
 @media (max-width: 768px) {
   .recipe-details-container {
     padding: 1rem;
