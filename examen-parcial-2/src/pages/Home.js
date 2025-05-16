@@ -11,6 +11,7 @@ const Home = () => {
   const [meals, setMeals] = useState([]);
   const [loadingMeals, setLoadingMeals] = useState(false);
   const [search, setSearch] = useState('');
+  const [sortAsc, setSortAsc] = useState(true);
 
   // Cargar los platillos de la categoría por defecto al montar
   useEffect(() => {
@@ -44,12 +45,21 @@ const Home = () => {
   };
 
   // Filtrar platillos por nombre o id
-  const filteredMeals = meals.filter(meal => {
+  let filteredMeals = meals.filter(meal => {
     const searchLower = search.toLowerCase();
     return (
       meal.strMeal.toLowerCase().includes(searchLower) ||
       meal.idMeal.toLowerCase().includes(searchLower)
     );
+  });
+
+  // Ordenar platillos
+  filteredMeals = [...filteredMeals].sort((a, b) => {
+    if (sortAsc) {
+      return a.strMeal.localeCompare(b.strMeal);
+    } else {
+      return b.strMeal.localeCompare(a.strMeal);
+    }
   });
 
   return (
@@ -103,6 +113,15 @@ const Home = () => {
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
+            {/* Botón de Sort By solo visible en móviles */}
+            <button
+              className="sort-by-btn"
+              onClick={() => setSortAsc((prev) => !prev)}
+              aria-label="Ordenar"
+              type="button"
+            >
+              Sort By: {sortAsc ? 'A-Z' : 'Z-A'}
+            </button>
           </div>
           {loadingMeals ? (
             <div className="recipe-categories-loading">Cargando platillos...</div>

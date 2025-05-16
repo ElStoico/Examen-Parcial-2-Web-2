@@ -478,6 +478,16 @@ html, body {
     height: 9px;
     margin-right: 0.2rem;
   }
+  .search-bar-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sort-by-btn {
+    display: block !important;
+    width: 100%;
+    margin: 0.7rem 0 0 0;
+    text-align: center;
+  }
 }
 
 /* Móviles pequeños */
@@ -544,4 +554,23 @@ html, body {
   margin-left: 0;
   margin-right: auto;
   padding-left: 2.2rem;
+}
+
+.sort-by-btn {
+  display: none;
+  margin-left: 0.7rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background: #ffd600;
+  color: #222;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sort-by-btn:hover {
+  background: #fffbe6;
+  color: #000018;
 } 
