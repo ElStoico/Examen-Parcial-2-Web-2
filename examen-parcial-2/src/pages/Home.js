@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/home.css';
 import RecipeCategories from '../components/RecipeCategories';
+import ramenImg from '../images/ramen.png';
 
 const Home = () => {
   // Datos de ejemplo para las categorías
@@ -24,18 +25,33 @@ const Home = () => {
       <div className="banner">
         <div className="banner-left">
           <img 
-            src="https://via.placeholder.com/500x400" 
+            src={ramenImg} 
             alt="Banner principal" 
             className="banner-image"
           />
         </div>
         <div className="banner-right">
-          <h1 className="banner-title">Bienvenido a Nuestra Plataforma</h1>
-          <h2 className="banner-subtitle">Descubre Nuevas Posibilidades</h2>
-          <p className="banner-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <div className="banner-header-row">
+            <span className="chef-hat-icon">🍳</span>
+            <span className="banner-homechef">HomeChef</span>
+          </div>
+          <div className="banner-titles">
+            <div className="banner-title-row">
+              <h1 className="banner-title-left">Chefs</h1>
+              <div className="banner-title-right">
+                <span className="yellow-dot" />
+                <span className="banner-new-recipe">New recipe for you to try out, let's cook!</span>
+              </div>
+            </div>
+            <div className="banner-title-row">
+              <div className="banner-title-spacer" />
+              <h1 className="banner-title-right-title">Academy</h1>
+            </div>
+            <div className="banner-title-row">
+              <h1 className="banner-title-left">Secrets</h1>
+              <div className="banner-title-spacer" />
+            </div>
+          </div>
         </div>
       </div>
 

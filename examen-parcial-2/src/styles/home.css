@@ -64,8 +64,9 @@ html, body {
 
 .banner {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   background-color: white;
   border-radius: 10px;
   padding: 2rem;
@@ -77,11 +78,15 @@ html, body {
 
 .banner-left {
   flex: 1;
-  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 1rem;
 }
 
 .banner-image {
   width: 100%;
+  max-width: 350px;
   height: auto;
   border-radius: 8px;
   object-fit: cover;
@@ -89,7 +94,7 @@ html, body {
 
 .banner-right {
   flex: 1;
-  padding-left: 2rem;
+  padding-left: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,6 +104,7 @@ html, body {
   font-size: 2.5rem;
   color: #333;
   margin-bottom: 1rem;
+  
 }
 
 .banner-subtitle {
@@ -212,6 +218,83 @@ html, body {
   font-size: 0.8rem;
 }
 
+/* Banner nuevo estilo */
+.banner-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.chef-hat-icon {
+  font-size: 1.3rem;
+  margin-right: 0.2rem;
+}
+
+.banner-homechef {
+  font-size: 1.1rem;
+  color: #222;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.banner-titles {
+  width: 100%;
+}
+
+.banner-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.banner-title-left {
+  font-size: 3.2rem;
+  font-family: 'Georgia', serif;
+  color: #363c4f;
+  font-weight: 600;
+  margin: 0.2rem 0 0.2rem 0;
+  line-height: 1;
+}
+
+.banner-title-right-title {
+  font-size: 3.2rem;
+  font-family: 'Georgia', serif;
+  color: #363c4f;
+  font-weight: 600;
+  margin: 0.2rem 0 0.2rem 0;
+  line-height: 1;
+  text-align: right;
+}
+
+.banner-title-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.banner-new-recipe {
+  font-size: 1rem;
+  color: #363c4f;
+  font-weight: 400;
+}
+
+.yellow-dot {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background: #ffd600;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  border: 2px solid #fffbe6;
+}
+
+.banner-title-spacer {
+  flex: 1;
+}
+
 /* Estilos responsive */
 /* Pantallas grandes */
 @media (max-width: 1200px) {
@@ -239,7 +322,26 @@ html, body {
   }
 
   .banner {
+    flex-direction: column;
     padding: 1.5rem;
+  }
+
+  .banner-left {
+    padding-right: 0;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .banner-right {
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .banner-image {
+    max-width: 250px;
+    margin: 0 auto;
   }
 
   .banner-title {
@@ -261,6 +363,14 @@ html, body {
   .categories-column,
   .results-column {
     width: 100%;
+  }
+
+  .banner-title-left,
+  .banner-title-right-title {
+    font-size: 2.2rem;
+  }
+  .banner-header-row {
+    margin-bottom: 0.7rem;
   }
 }
 
@@ -312,6 +422,14 @@ html, body {
     padding: 0.5rem;
   }
 
+  .banner-left {
+    margin-bottom: 1rem;
+  }
+
+  .banner-image {
+    max-width: 180px;
+  }
+
   .banner-title {
     font-size: 1.6rem;
   }
@@ -336,6 +454,28 @@ html, body {
 
   .section-title {
     font-size: 1.5rem;
+  }
+
+  .banner-header-row {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 0.5rem;
+  }
+  .banner-title-row {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .banner-title-left,
+  .banner-title-right-title {
+    font-size: 1.5rem;
+  }
+  .banner-new-recipe {
+    font-size: 0.8rem;
+  }
+  .yellow-dot {
+    width: 9px;
+    height: 9px;
+    margin-right: 0.2rem;
   }
 }
 
