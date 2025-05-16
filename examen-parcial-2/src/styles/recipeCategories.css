@@ -31,6 +31,12 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+.recipe-category-card.selected {
+  border: 2px solid #ffd600;
+  background: rgba(255, 214, 0, 0.08);
+  box-shadow: 0 0 0 2px #fffbe6;
+}
+
 .recipe-category-thumbnail {
   width: 80px;
   height: 80px;

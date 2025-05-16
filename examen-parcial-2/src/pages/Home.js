@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/home.css';
 import RecipeCategories from '../components/RecipeCategories';
+import RecipeCard from '../components/RecipeCard';
 import ramenImg from '../images/ramen.png';
 
 const Home = () => {
-  // Datos de ejemplo para las categorías
-  const categories = [
-    { id: 1, name: 'Categoría 1', count: 15 },
-    { id: 2, name: 'Categoría 2', count: 8 },
-    { id: 3, name: 'Categoría 3', count: 12 },
-    { id: 4, name: 'Categoría 4', count: 6 }
-  ];
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [meals, setMeals] = useState([]);
+  const [loadingMeals, setLoadingMeals] = useState(false);
 
-  // Datos de ejemplo para los resultados
-  const results = [
-    { id: 1, title: 'Resultado 1', description: 'Descripción del resultado 1', category: 'Categoría 1' },
-    { id: 2, title: 'Resultado 2', description: 'Descripción del resultado 2', category: 'Categoría 2' },
-    { id: 3, title: 'Resultado 3', description: 'Descripción del resultado 3', category: 'Categoría 1' },
-    { id: 4, title: 'Resultado 4', description: 'Descripción del resultado 4', category: 'Categoría 3' }
-  ];
+  // Maneja el click en una categoría
+  const handleCategoryClick = async (categoryName) => {
+    setSelectedCategory(categoryName);
+    setLoadingMeals(true);
+    try {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(categoryName)}`);
+      const data = await response.json();
+      setMeals(data.meals || []);
+    } catch (error) {
+      setMeals([]);
+    }
+    setLoadingMeals(false);
+  };
 
   return (
     <div className="home-container">
@@ -58,20 +61,28 @@ const Home = () => {
       <div className="content-section">
         <div className="categories-column">
           <h2 className="section-title">Categorías de Recetas</h2>
-          <RecipeCategories />
+          <RecipeCategories onCategoryClick={handleCategoryClick} selectedCategory={selectedCategory} />
         </div>
 
         <div className="results-column">
-          <h2 className="section-title">Resultados</h2>
-          <div className="results-grid">
-            {results.map(result => (
-              <div key={result.id} className="result-card">
-                <h3>{result.title}</h3>
-                <p>{result.description}</p>
-                <span className="category-tag">{result.category}</span>
-              </div>
-            ))}
-          </div>
+          <h2 className="section-title">
+            {selectedCategory ? `Platillos de ${selectedCategory}` : 'Resultados'}
+          </h2>
+          {loadingMeals ? (
+            <div className="recipe-categories-loading">Cargando platillos...</div>
+          ) : (
+            <div className="results-grid">
+              {meals && meals.length > 0 ? (
+                meals.map(meal => (
+                  <RecipeCard key={meal.idMeal} name={meal.strMeal} image={meal.strMealThumb} />
+                ))
+              ) : (
+                <div style={{ color: '#fff', textAlign: 'center', width: '100%' }}>
+                  {selectedCategory ? 'No hay platillos para esta categoría.' : 'Selecciona una categoría para ver los platillos.'}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

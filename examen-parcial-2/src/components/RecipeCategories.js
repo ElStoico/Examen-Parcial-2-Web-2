@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/recipeCategories.css';
 
-const RecipeCategories = () => {
+const RecipeCategories = ({ onCategoryClick, selectedCategory }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,12 @@ const RecipeCategories = () => {
     <div className="recipe-categories-wrapper">
       <div className="recipe-categories-grid">
         {categories.map((category) => (
-          <div key={category.idCategory} className="recipe-category-card">
+          <div
+            key={category.idCategory}
+            className={`recipe-category-card${selectedCategory === category.strCategory ? ' selected' : ''}`}
+            onClick={() => onCategoryClick && onCategoryClick(category.strCategory)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src={category.strCategoryThumb} 
               alt={category.strCategory} 
