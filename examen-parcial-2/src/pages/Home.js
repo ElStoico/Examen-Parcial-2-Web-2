@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/home.css';
+import RecipeCategories from '../components/RecipeCategories';
 
 const Home = () => {
   // Datos de ejemplo para las categorías
@@ -40,15 +41,8 @@ const Home = () => {
 
       <div className="content-section">
         <div className="categories-column">
-          <h2 className="section-title">Categorías</h2>
-          <div className="categories-grid">
-            {categories.map(category => (
-              <div key={category.id} className="category-card">
-                <h3>{category.name}</h3>
-                <p>{category.count} elementos</p>
-              </div>
-            ))}
-          </div>
+          <h2 className="section-title">Categorías de Recetas</h2>
+          <RecipeCategories />
         </div>
 
         <div className="results-column">
