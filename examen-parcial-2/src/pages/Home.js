@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/home.css';
 import RecipeCategories from '../components/RecipeCategories';
 import RecipeCard from '../components/RecipeCard';
 import ramenImg from '../images/ramen.png';
 
+const DEFAULT_CATEGORY = 'Dessert';
+
 const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(DEFAULT_CATEGORY);
   const [meals, setMeals] = useState([]);
   const [loadingMeals, setLoadingMeals] = useState(false);
+
+  // Cargar los platillos de la categoría por defecto al montar
+  useEffect(() => {
+    const fetchDefaultMeals = async () => {
+      setLoadingMeals(true);
+      try {
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(DEFAULT_CATEGORY)}`);
+        const data = await response.json();
+        setMeals(data.meals || []);
+      } catch (error) {
+        setMeals([]);
+      }
+      setLoadingMeals(false);
+    };
+    fetchDefaultMeals();
+  }, []);
 
   // Maneja el click en una categoría
   const handleCategoryClick = async (categoryName) => {
