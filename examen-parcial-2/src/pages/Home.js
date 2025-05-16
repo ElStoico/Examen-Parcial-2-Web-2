@@ -10,6 +10,7 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(DEFAULT_CATEGORY);
   const [meals, setMeals] = useState([]);
   const [loadingMeals, setLoadingMeals] = useState(false);
+  const [search, setSearch] = useState('');
 
   // Cargar los platillos de la categoría por defecto al montar
   useEffect(() => {
@@ -31,6 +32,7 @@ const Home = () => {
   const handleCategoryClick = async (categoryName) => {
     setSelectedCategory(categoryName);
     setLoadingMeals(true);
+    setSearch(''); // Limpiar búsqueda al cambiar de categoría
     try {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(categoryName)}`);
       const data = await response.json();
@@ -40,6 +42,15 @@ const Home = () => {
     }
     setLoadingMeals(false);
   };
+
+  // Filtrar platillos por nombre o id
+  const filteredMeals = meals.filter(meal => {
+    const searchLower = search.toLowerCase();
+    return (
+      meal.strMeal.toLowerCase().includes(searchLower) ||
+      meal.idMeal.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <div className="home-container">
@@ -83,15 +94,22 @@ const Home = () => {
         </div>
 
         <div className="results-column">
-          <h2 className="section-title">
-            {selectedCategory ? `Platillos de ${selectedCategory}` : 'Resultados'}
-          </h2>
+          {/* Barra de búsqueda alineada a la izquierda con ícono de lupa en el placeholder */}
+          <div className="search-bar-container">
+            <input
+              type="text"
+              className="recipe-search-bar"
+              placeholder="🔍 Search recipes and more..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </div>
           {loadingMeals ? (
             <div className="recipe-categories-loading">Cargando platillos...</div>
           ) : (
             <div className="results-grid">
-              {meals && meals.length > 0 ? (
-                meals.map(meal => (
+              {filteredMeals && filteredMeals.length > 0 ? (
+                filteredMeals.map(meal => (
                   <RecipeCard key={meal.idMeal} name={meal.strMeal} image={meal.strMealThumb} />
                 ))
               ) : (

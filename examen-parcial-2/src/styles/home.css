@@ -500,4 +500,47 @@ html, body {
   .result-card p {
     font-size: 0.9rem;
   }
+}
+
+.recipe-search-bar {
+  width: 100%;
+  max-width: 350px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0;
+  background: #000018;
+  color: #222;
+}
+
+.recipe-search-bar:focus {
+  border-color: #ffd600;
+  box-shadow: 0 0 0 2px #fffbe6;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 1.2rem;
+  color: #888;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.results-column .recipe-search-bar {
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 2.2rem;
 } 
