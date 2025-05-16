@@ -110,7 +110,7 @@ const Home = () => {
             <div className="results-grid">
               {filteredMeals && filteredMeals.length > 0 ? (
                 filteredMeals.map(meal => (
-                  <RecipeCard key={meal.idMeal} name={meal.strMeal} image={meal.strMealThumb} />
+                  <RecipeCard key={meal.idMeal} id={meal.idMeal} name={meal.strMeal} image={meal.strMealThumb} />
                 ))
               ) : (
                 <div style={{ color: '#fff', textAlign: 'center', width: '100%' }}>
