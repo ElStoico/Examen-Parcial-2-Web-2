@@ -151,7 +151,7 @@ html, body {
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
@@ -373,6 +373,10 @@ html, body {
   .banner-header-row {
     margin-bottom: 0.7rem;
   }
+
+  .categories-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Tablets pequeñas y móviles grandes */
@@ -407,7 +411,7 @@ html, body {
 
   .categories-grid,
   .results-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 150px 1fr;
   }
 }
 
@@ -485,8 +489,12 @@ html, body {
   .sort-by-btn {
     display: block !important;
     width: 100%;
-    margin: 0.7rem 0 0 0;
+    max-width: 350px;
+    margin: 0.7rem auto 0 auto;
     text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
   }
 }
 
@@ -510,6 +518,13 @@ html, body {
 
   .result-card p {
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) and (min-width: 400px) {
+  .categories-grid,
+  .results-grid {
+    grid-template-columns: 150px 1fr !important;
   }
 }
 
